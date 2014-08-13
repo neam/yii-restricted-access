@@ -48,13 +48,13 @@ class AdminController extends Controller
 
         $columns = array(
             array(
-                'class' => 'AccountLinkColumn',
+                'class' => '\AccountLinkColumn',
                 'header' => '',
                 'labelExpression' => '$data->itemLabel',
                 'urlExpression' => 'Yii::app()->controller->createUrl("admin/editAccountPermissions", array("id" => $data["id"]))',
             ),
             array(
-                'class' => 'ActivateLinkColumn',
+                'class' => '\ActivateLinkColumn',
                 'labelExpression' => '(int)$data->status === 0 ? Yii::t("account", "Activate") : ""',
                 'urlExpression' => '(int)$data->status === 0 ? Yii::app()->controller->createUrl("admin/activateAccount", array("id" => $data["id"])) : ""',
             ),
@@ -146,7 +146,7 @@ class AdminController extends Controller
         }
 
         $this->buildBreadcrumbs(array(
-            Yii::t('app', 'Accounts') => array('/admin/manageAccounts'),
+            Yii::t('app', 'Accounts') => $this->createUrl('admin/manageAccounts'),
             Yii::t('app', 'Permissions'),
         ));
 
@@ -199,4 +199,30 @@ class AdminController extends Controller
 
         $this->redirect(array('manageAccounts'));
     }
+
+    /**
+     * Builds and sets the breadcrumbs. (TODO: Move out this copied method from this extension)
+     * @param array $items the list of breadcrumb items as label => URL
+     * @param array $rootItem override the root breadcrumb item.
+     */
+    public $breadcrumbs;
+    public function buildBreadcrumbs(array $items, array $rootItem = array())
+    {
+        $breadcrumbs = array();
+
+        !empty($rootItem)
+            ? $breadcrumbs[$rootItem[0]] = $rootItem[1] // override breadcrumb root
+            : $breadcrumbs['Home'] = Yii::app()->homeUrl;
+
+        // NICE: Yii::app()->breadcrumbRootLabel
+
+        foreach ($items as $label => $url) {
+            if (!isset($breadcrumbs[$label])) {
+                $breadcrumbs[$label] = $url;
+            }
+        }
+
+        $this->breadcrumbs = $breadcrumbs;
+    }
+
 }

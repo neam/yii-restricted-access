@@ -16,7 +16,7 @@ namespace neam\yiiRestrictedAccess;
  *
  * @package booster.widgets.grids.columns
  */
-class TbToggleColumn extends TbDataColumn
+class TbToggleColumn extends \TbDataColumn
 {
 
 	public $value;
@@ -147,7 +147,7 @@ class TbToggleColumn extends TbDataColumn
 	public function init()
 	{
 		if ($this->name === null) {
-			throw new CException(Yii::t(
+			throw new \CException(\Yii::t(
 				'zii',
 				'"{attribute}" attribute cannot be empty.',
 				array('{attribute}' => "name")
@@ -164,23 +164,23 @@ class TbToggleColumn extends TbDataColumn
 	protected function initButton()
 	{
 		if ($this->checkedButtonLabel === null) {
-			$this->checkedButtonLabel = Yii::t('zii', 'Uncheck');
+			$this->checkedButtonLabel = \Yii::t('zii', 'Uncheck');
 		}
 		if ($this->uncheckedButtonLabel === null) {
-			$this->uncheckedButtonLabel = Yii::t('zii', 'Check');
+			$this->uncheckedButtonLabel = \Yii::t('zii', 'Check');
 		}
 		if ($this->emptyButtonLabel === null) {
-			$this->emptyButtonLabel = Yii::t('zii', 'Not set');
+			$this->emptyButtonLabel = \Yii::t('zii', 'Not set');
 		}
 
 		$this->button = array(
-			'url' => 'Yii::app()->controller->createUrl("' . $this->toggleAction . '",array("id"=>$data->primaryKey,"attribute"=>"' . $this->name . '"))',
+			'url' => '\Yii::app()->controller->createUrl("' . $this->toggleAction . '",array("id"=>$data->primaryKey,"attribute"=>"' . $this->name . '"))',
 			'htmlOptions' => array('class' => $this->name . '_toggle' . $this->uniqueClassSuffix),
 		);
 
-		if (Yii::app()->request->enableCsrfValidation) {
-			$csrfTokenName = Yii::app()->request->csrfTokenName;
-			$csrfToken = Yii::app()->request->csrfToken;
+		if (\Yii::app()->request->enableCsrfValidation) {
+			$csrfTokenName = \Yii::app()->request->csrfTokenName;
+			$csrfToken = \Yii::app()->request->csrfToken;
 			$csrf = "\n\t\tdata:{ '$csrfTokenName':'$csrfToken' },";
 		} else {
 			$csrf = '';
@@ -216,13 +216,13 @@ function() {
 	{
 		$js = array();
 
-		$function = CJavaScript::encode($this->button['click']);
+		$function = \CJavaScript::encode($this->button['click']);
 		unset($this->button['click']);
 		$class = preg_replace('/\s+/', '.', $this->button['htmlOptions']['class']);
 		$js[] = "$(document).on('click','#{$this->grid->id} a.{$class}',$function);";
 
 		if ($js !== array()) {
-			Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, implode("\n", $js));
+			\Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->id, implode("\n", $js));
 		}
 	}
 
@@ -236,7 +236,7 @@ function() {
 	protected function renderDataCellContent($row, $data)
 	{
 		$checked = ($this->value === null)
-			? CHtml::value($data, $this->name)
+			? \CHtml::value($data, $this->name)
 			: $this->evaluateExpression($this->value, array('data' => $data, 'row' => $row));
 
 		$button = $this->button;
@@ -251,11 +251,11 @@ function() {
             if (!isset($button['htmlOptions']['data-toggle'])) {
                 $button['htmlOptions']['data-toggle'] = 'tooltip';
             }
-			echo CHtml::link('<i class="' . $button['icon'] . '"></i>', $button['url'], $button['htmlOptions']);
+			echo \CHtml::link('<i class="' . $button['icon'] . '"></i>', $button['url'], $button['htmlOptions']);
 		} else {
 			$button['label'] = $this->getButtonLabel($checked);
 			$button['class'] = 'bootstrap.widgets.TbButton';
-			$widget = Yii::createComponent($button);
+			$widget = \Yii::createComponent($button);
 			$widget->init();
 			$widget->run();
 		}

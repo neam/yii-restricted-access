@@ -133,7 +133,7 @@ class AdminController extends Controller
                 || (isset($groupModeratorRoles[$roleName]) && Yii::app()->user->checkAccess('GrantGroupModeratorPermissions'))
             ) {
                 $columns[] = array(
-                    'class' => 'GroupRoleToggleColumn',
+                    'class' => '\GroupRoleToggleColumn',
                     'displayText' => false,
                     'header' => $roleLabel,
                     'name' => $roleName,

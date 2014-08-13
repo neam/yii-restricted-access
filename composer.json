@@ -22,7 +22,7 @@
         }
     ],
     "autoload": {
-        "classmap": ["helpers/", "behaviors/"]
+        "classmap": ["helpers/", "behaviors/", "widgets/"]
     },
     "require": {
         "php": ">=5.4.0",

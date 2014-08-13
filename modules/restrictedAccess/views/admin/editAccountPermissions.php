@@ -13,7 +13,7 @@
     <h2><?php echo Yii::t('admin', 'Permissions'); ?></h2>
 
     <?php $this->widget(
-        'TbGridView',
+        '\TbGridView',
         array(
             'id' => 'permissions-grid',
             'dataProvider' => $dataProvider,

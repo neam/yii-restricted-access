@@ -1,6 +1,6 @@
 <?php
 
-class GroupRoleToggleColumn extends TbToggleColumn
+class GroupRoleToggleColumn extends \neam\yiiRestrictedAccess\TbToggleColumn
 {
     protected function initButton()
     {

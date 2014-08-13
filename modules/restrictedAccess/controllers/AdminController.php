@@ -51,12 +51,12 @@ class AdminController extends Controller
                 'class' => 'AccountLinkColumn',
                 'header' => '',
                 'labelExpression' => '$data->itemLabel',
-                'urlExpression' => 'Yii::app()->createUrl("admin/editAccountPermissions", array("id" => $data["id"]))',
+                'urlExpression' => 'Yii::app()->controller->createUrl("admin/editAccountPermissions", array("id" => $data["id"]))',
             ),
             array(
                 'class' => 'ActivateLinkColumn',
                 'labelExpression' => '(int)$data->status === 0 ? Yii::t("account", "Activate") : ""',
-                'urlExpression' => '(int)$data->status === 0 ? Yii::app()->createUrl("admin/activateAccount", array("id" => $data["id"])) : ""',
+                'urlExpression' => '(int)$data->status === 0 ? Yii::app()->controller->createUrl("admin/activateAccount", array("id" => $data["id"])) : ""',
             ),
             /*
             array(

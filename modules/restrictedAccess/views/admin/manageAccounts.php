@@ -17,7 +17,7 @@ $this->setPageTitle(
         <small><?php echo Yii::t('model', 'Manage'); ?></small>
     </h1>
     <?php $this->widget(
-        'TbGridView',
+        '\TbGridView',
         array(
             'id' => 'account-grid',
             'dataProvider' => $dataProvider,

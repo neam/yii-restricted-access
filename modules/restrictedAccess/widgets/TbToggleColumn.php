@@ -5,6 +5,8 @@
  * @author: antonio ramirez <antonio@clevertech.biz>
  */
 
+namespace neam\yiiRestrictedAccess;
+
 /**
  *## TbToggleColumn widget
  *

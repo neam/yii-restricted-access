@@ -58,8 +58,8 @@ class AdminController extends Controller
             ),
             array(
                 'class' => '\ActivateLinkColumn',
-                'labelExpression' => '(int)$data->status === 0 ? Yii::t("account", "Activate") : ""',
-                'urlExpression' => '(int)$data->status === 0 ? Yii::app()->controller->createUrl("admin/activateAccount", array("id" => $data["id"])) : ""',
+                'labelExpression' => '(int)$data->status === 0 ? Yii::t("account", "Activate") : Yii::t("account", "Deactivate")',
+                'urlExpression' => '(int)$data->status === 0 ? Yii::app()->controller->createUrl("admin/activate", array("id" => $data["id"])) : Yii::app()->controller->createUrl("admin/deactivate", array("id" => $data["id"]))',
             ),
             /*
             array(
@@ -186,21 +186,45 @@ class AdminController extends Controller
     }
 
     /**
-     * Activates the given account (if not already activated).
-     * @param string $id the account ID.
+     * @param string $id
+     * @return Account
+     * @throws CHttpException
      */
-    public function actionActivateAccount($id)
+    protected function loadModel($id)
     {
-        $account = Account::model()->findByPk($id);
-
-        if ($account->status > 0) {
-            return;
+        $model = Account::model()->findByPk($id);
+        if ($model === null) {
+            throw new CHttpException(404, Yii::t('model', 'The requested page does not exist.'));
         }
+        return $model;
+    }
 
-        $account->status = 1;
+    /**
+     * Activates a given user.
+     * @param string $id the user ID.
+     */
+    public function actionActivate($id)
+    {
+        $account = $this->loadModel($id);
+
+        $account->status = \nordsoftware\yii_account\models\ar\Account::STATUS_ACTIVATED;
         $account->save(true, array('status'));
 
-        $this->redirect(array('manageAccounts'));
+        $this->redirect(array($this->defaultAction));
+    }
+
+    /**
+     * Deactivates a given user.
+     * @param string $id the user ID.
+     */
+    public function actionDeactivate($id)
+    {
+        $account = $this->loadModel($id);
+
+        $account->status = \nordsoftware\yii_account\models\ar\Account::STATUS_INACTIVE;
+        $account->save(true, array('status'));
+
+        $this->redirect(array($this->defaultAction));
     }
 
     /**

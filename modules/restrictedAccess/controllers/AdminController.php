@@ -40,6 +40,9 @@ class AdminController extends Controller
         $dataProvider = new CActiveDataProvider(
             'Account',
             array(
+                'sort' => array(
+                    'defaultOrder' => 'create_at DESC',
+                ),
                 'pagination' => array(
                     'pageSize' => 20
                 ),

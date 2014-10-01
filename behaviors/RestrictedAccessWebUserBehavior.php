@@ -121,7 +121,7 @@ class RestrictedAccessWebUserBehavior extends CBehavior
             return null;
         }
 
-        return Account::model()->findByPk($this->id);
+        return Account::model()->findByPk($this->owner->id);
     }
     */
 
@@ -150,7 +150,7 @@ class RestrictedAccessWebUserBehavior extends CBehavior
             $groups = PermissionHelper::getGroups();
             $roles = PermissionHelper::getRoles();
 
-            foreach (PermissionHelper::getGroupHasAccountsForAccount($this->id) as $gha) {
+            foreach (PermissionHelper::getGroupHasAccountsForAccount($this->owner->id) as $gha) {
                 $groupName = $groups[$gha->group_id];
 
                 if (!isset($tree[$groupName])) {
@@ -206,7 +206,7 @@ class RestrictedAccessWebUserBehavior extends CBehavior
             return false;
         }
 
-        $account = Account::model()->findByPk($this->id);
+        $account = Account::model()->findByPk($this->owner->id);
 
         return (int) $account->superuser === 1;
     }
@@ -256,7 +256,7 @@ class RestrictedAccessWebUserBehavior extends CBehavior
     {
         if (!$this->owner->isGuest) {
             $attributes = array(
-                'account_id' => $this->id,
+                'account_id' => $this->owner->id,
                 'role_id' => PermissionHelper::roleNameToId($roleName),
             );
 
@@ -317,7 +317,7 @@ class RestrictedAccessWebUserBehavior extends CBehavior
         $groups = PermissionHelper::getGroups();
         $roles = PermissionHelper::getRoles();
 
-        foreach (PermissionHelper::getGroupHasAccountsForAccount($this->id) as $gha) {
+        foreach (PermissionHelper::getGroupHasAccountsForAccount($this->owner->id) as $gha) {
             if (!isset($assigned['groups'][$gha->group_id])) {
                 $assigned['groups'][$gha->group_id] = $groups[$gha->group_id];
             }
@@ -338,7 +338,7 @@ class RestrictedAccessWebUserBehavior extends CBehavior
     public function belongsToGroup($group, $role = null)
     {
         $attributes = array(
-            'account_id' => $this->id,
+            'account_id' => $this->owner->id,
             'group_id' => PermissionHelper::groupNameToId($group),
         );
 

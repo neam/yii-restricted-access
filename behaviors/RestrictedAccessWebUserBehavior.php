@@ -273,7 +273,7 @@ class RestrictedAccessWebUserBehavior extends CBehavior
     public function getModel()
     {
         if (!$this->_model instanceof Account) {
-            $this->_model = Account::model()->findByPk($this->owner->id);
+            $this->_model = Account::model()->findByPk($this->id);
         }
 
         return $this->_model;

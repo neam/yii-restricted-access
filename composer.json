@@ -22,7 +22,7 @@
         }
     ],
     "autoload": {
-        "classmap": ["helpers/", "behaviors/", "modules/restrictedAccess/widgets/"]
+        "classmap": ["helpers/", "behaviors/", "modules/restrictedAccess/widgets/", "traits/"]
     },
     "require": {
         "php": ">=5.4.0",

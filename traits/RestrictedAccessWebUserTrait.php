@@ -6,7 +6,7 @@ trait RestrictedAccessWebUserTrait
     /**
      * @var Account
      */
-    protected $_model;
+    protected $_accountModel;
 
     /**
      * @return array
@@ -272,11 +272,11 @@ trait RestrictedAccessWebUserTrait
      */
     public function getModel()
     {
-        if (!$this->_model instanceof Account) {
-            $this->_model = Account::model()->findByPk($this->id);
+        if (!$this->_accountModel instanceof Account) {
+            $this->_accountModel = Account::model()->findByPk($this->id);
         }
 
-        return $this->_model;
+        return $this->_accountModel;
     }
 
     /**

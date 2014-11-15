@@ -292,7 +292,11 @@ class PermissionHelper
     {
         if (empty(self::$_roles)) {
             $roles = array();
-            foreach (Role::model()->findAll() as $model) {
+            $model = Role::model();
+            if (in_array("RestrictedAccessBehavior", array_keys($model->behaviors()))) {
+                $model = $model->unrestricted();
+            }
+            foreach ($model->findAll() as $model) {
                 $roles[$model->id] = $model->title;
             }
             self::$_roles = $roles;
@@ -310,7 +314,11 @@ class PermissionHelper
     {
         if (empty(self::$_groups)) {
             $groups = array();
-            foreach (Group::model()->findAll() as $model) {
+            $model = Group::model();
+            if (in_array("RestrictedAccessBehavior", array_keys($model->behaviors()))) {
+                $model = $model->unrestricted();
+            }
+            foreach ($model->findAll() as $model) {
                 $groups[$model->id] = $model->title;
             }
             self::$_groups = $groups;

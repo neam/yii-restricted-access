@@ -63,7 +63,7 @@ trait RestrictedAccessWebUserTrait
      */
     public function checkSystemRoleBasedAccess($operation)
     {
-        $operationRoleMap = MetaData::operationToSystemRolesMap();
+        $operationRoleMap = RolesAndOperations::operationToSystemRolesMap();
         foreach ($this->getSystemRoles() as $role) {
             if (isset($operationRoleMap[$operation]) && in_array($role, $operationRoleMap[$operation])) {
                 return true;
@@ -81,7 +81,7 @@ trait RestrictedAccessWebUserTrait
      */
     public function checkGroupRoleBasedAccess($operation)
     {
-        $operationRoleMap = MetaData::operationToGroupRolesMap();
+        $operationRoleMap = RolesAndOperations::operationToGroupRolesMap();
         foreach ($this->getGroupRoles() as $role) {
             if (isset($operationRoleMap[$operation]) && in_array($role, $operationRoleMap[$operation])) {
                 return true;

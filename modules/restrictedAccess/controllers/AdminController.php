@@ -93,7 +93,7 @@ class AdminController extends Controller
         $model = Account::model()->findByPk($id);
 
         $groups = array_merge(MetaData::projectGroups(), MetaData::topicGroups(), MetaData::skillGroups());
-        $groupRoles = MetaData::groupRoles();
+        $groupRoles = RolesAndOperations::groupRoles();
 
         $rawData = array();
 
@@ -130,7 +130,7 @@ class AdminController extends Controller
             'name' => 'groupLabel',
         );
 
-        $groupModeratorRoles = MetaData::groupModeratorRoles();
+        $groupModeratorRoles = RolesAndOperations::groupModeratorRoles();
         foreach ($groupRoles as $roleName => $roleLabel) {
             if (Yii::app()->user->checkAccess('GrantGroupAdminPermissions')
                 || (isset($groupModeratorRoles[$roleName]) && Yii::app()->user->checkAccess('GrantGroupModeratorPermissions'))

@@ -80,6 +80,17 @@ class RolesAndOperations
         return $titleToLabelMap[$title];
     }
 
+    static public function getAddItemSystemRoleMap()
+    {
+        $map = array();
+        foreach (DataModel::crudModels() as $modelClass => $table) {
+            $map["$modelClass.Add"] = array(
+                Role::AUTHENTICATED,
+            );
+        }
+        return $map;
+    }
+
     /**
      * @return array
      */

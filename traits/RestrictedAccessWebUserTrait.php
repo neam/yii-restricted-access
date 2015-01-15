@@ -289,16 +289,6 @@ trait RestrictedAccessWebUserTrait
     }
 
     /**
-     * Renders the user's profile picture.
-     * @param string $p3preset the P3Media preset. Defaults to 'dashboard-profile-picture'.
-     * @return string the HTML.
-     */
-    public function renderPicture($p3preset = 'user-profile-picture')
-    {
-        return $this->getModel()->profile->renderPicture($p3preset);
-    }
-
-    /**
      * @return CActiveRecord|null
      */
     public function getGroupRoles()

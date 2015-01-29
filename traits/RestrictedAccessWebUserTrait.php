@@ -103,7 +103,7 @@ trait RestrictedAccessWebUserTrait
         Yii::log("checkModelOperationAccess - operation: $operation", CLogger::LEVEL_INFO);
 
         // owner-based
-        if ($model->owner_id == Yii::app()->user->id) {
+        if (!empty($model->owner_id) && $model->owner_id === Yii::app()->user->id) {
             return true;
         }
 

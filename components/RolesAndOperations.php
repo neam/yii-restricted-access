@@ -83,7 +83,7 @@ class RolesAndOperations
     static public function getAddItemSystemRoleMap()
     {
         $map = array();
-        foreach (DataModel::crudModels() as $modelClass => $table) {
+        foreach (ItemTypes::where('generate_phundament_crud') as $modelClass => $table) {
             $map["$modelClass.Add"] = array(
                 Role::AUTHENTICATED,
             );

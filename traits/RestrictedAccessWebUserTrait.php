@@ -36,16 +36,19 @@ trait RestrictedAccessWebUserTrait
         Yii::log("checkAccess - operation: $operation", CLogger::LEVEL_INFO);
 
         // Auto-grant access to admins
+        Yii::log('isAdmin?', CLogger::LEVEL_INFO);
         if ($this->isAdmin()) {
             Yii::log('isAdmin true', CLogger::LEVEL_INFO);
             return true;
         }
 
+        Yii::log("checkSystemRoleBasedAccess - operation: $operation", CLogger::LEVEL_INFO);
         if ($this->checkSystemRoleBasedAccess($operation)) {
             Yii::log("checkSystemRoleBasedAccess true - operation: $operation", CLogger::LEVEL_INFO);
             return true;
         }
 
+        Yii::log("checkGroupRoleBasedAccess - operation: $operation", CLogger::LEVEL_INFO);
         if ($this->checkGroupRoleBasedAccess($operation)) {
             Yii::log("checkGroupRoleBasedAccess true - operation: $operation", CLogger::LEVEL_INFO);
             return true;

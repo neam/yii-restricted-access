@@ -13,8 +13,8 @@ trait RestrictedAccessItemTrait
         $publicCriteria->join = "LEFT JOIN `node_has_group` AS `nhg_public` ON (`$tableAlias`.`node_id` = `nhg_public`.`node_id` AND `nhg_public`.`group_id` = :current_project_group_id AND `nhg_public`.`visibility` = :visibility)";
         $publicCriteria->addCondition("(`nhg_public`.`id` IS NOT NULL)");
         $publicCriteria->params = array(
-            ":current_project_group_id" => PermissionHelper::groupNameToId(Group::GAPMINDER_ORG), // TODO: Base on current domain
-            ":visibility" => NodeHasGroup::VISIBILITY_VISIBLE,
+            ":current_project_group_id" => PermissionHelper::groupNameToId(RESTRICTED_ACCESS_ROOT_GROUP),
+            ":visibility" => PermissionHelper::VISIBILITY_VISIBLE,
         );
 
         // Console applications will always use the "public" criteria as we cannot check the user permissions due to

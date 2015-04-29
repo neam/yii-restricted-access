@@ -5,6 +5,10 @@
  */
 class PermissionHelper
 {
+
+    const VISIBILITY_VISIBLE = 'visible';
+    const VISIBILITY_HIDDEN = null;
+
     /**
      * @var array runtime cache for roles.
      */

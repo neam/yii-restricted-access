@@ -92,23 +92,24 @@ class AdminController extends Controller
     {
         $model = Account::model()->findByPk($id);
 
-        $groups = array_merge(MetaData::projectGroups(), MetaData::topicGroups(), MetaData::skillGroups());
+        $groups = Group::model()->findAll();
         $groupRoles = RolesAndOperations::groupRoles();
 
         $rawData = array();
 
         $id = 1;
-        foreach ($groups as $groupName => $groupLabel) {
+        foreach ($groups as $group) {
+
             // TODO fix this, must use stdClass because of the stupid TbToggleColumn
             $row = new stdClass();
 
             $row->id = $id++;
             $row->accountId = $model->id;
-            $row->groupName = $groupName;
-            $row->groupLabel = $groupLabel;
+            $row->groupName = $group->title; // TODO: rename to ref
+            $row->groupLabel = $group->title; // TODO: rename to ref
 
             foreach ($groupRoles as $roleName => $roleLabel) {
-                $row->$roleName = $model->groupRoleIsActive($groupName, $roleName);
+                $row->$roleName = $model->groupRoleIsActive($row->groupName, $roleName);
             }
 
             $rawData[] = $row;

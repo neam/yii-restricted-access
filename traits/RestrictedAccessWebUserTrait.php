@@ -211,6 +211,10 @@ trait RestrictedAccessWebUserTrait
 
         $account = Account::model()->findByPk($this->id);
 
+        if (empty($account)) {
+            throw new CException("No account found with id {$this->id}");
+        }
+
         return (int) $account->superuser === 1;
     }
 

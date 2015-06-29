@@ -3,7 +3,7 @@
 trait RestrictedAccessItemTrait
 {
 
-    public function beforeRead()
+    public function beforeRead($event)
     {
         // todo: use corr accessRestricted from behavior -> tests
 

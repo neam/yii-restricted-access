@@ -50,10 +50,10 @@ class RestrictedAccessBehavior extends CActiveRecordBehavior
      *
      * @return \CActiveRecord the model
      */
-    public function readable()
+    public function readable($event)
     {
         if (method_exists($this->owner, 'beforeRead')) {
-            $value = $this->owner->beforeRead();
+            $value = $this->owner->beforeRead($event);
             $criteria = $this->owner->getDbCriteria();
             if ($value === false) {
                 $criteria->addCondition('0');
@@ -92,7 +92,7 @@ class RestrictedAccessBehavior extends CActiveRecordBehavior
     public function beforeFind($event)
     {
         if ($this->enableRestriction && !$this->_unrestricted) {
-            $this->readable();
+            $this->readable($event);
         }
         $this->_unrestricted = false;
     }
@@ -103,7 +103,7 @@ class RestrictedAccessBehavior extends CActiveRecordBehavior
     public function beforeCount($event)
     {
         if ($this->enableRestriction && !$this->_unrestricted) {
-            $this->readable();
+            $this->readable($event);
         }
         $this->_unrestricted = false;
     }
